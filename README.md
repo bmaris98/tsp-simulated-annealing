@@ -8,4 +8,4 @@ The position of the nodes is generated random.
 
 ![Demo](demo.png)
 
-[Demo here](https://bmaris98.github.io/tsp-simulated-annealing/){:target="_blank"}
+[--> Demo here.](https://bmaris98.github.io/tsp-simulated-annealing/)
