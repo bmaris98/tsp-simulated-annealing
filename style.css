@@ -62,3 +62,8 @@ canvas {
     position: absolute;
     margin: 0;
 }
+
+#chart {
+  width: 100%;
+  height: 500px;
+}

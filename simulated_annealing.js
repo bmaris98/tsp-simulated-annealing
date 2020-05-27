@@ -1,9 +1,12 @@
+$('#temp').val(100);
+$('#retention').val(0.9);
+
 var stop;
 var distanceMatrix;
 var currentSolution;
 var iterationCount = 0;
-var temperature = 100;
-var relativeTemperatureRetention = 0.9;
+var temperature = $('#temp').val();
+var relativeTemperatureRetention = $('#retention').val();
 var interval = null;
 
 /**
@@ -33,7 +36,6 @@ function computeCost(list) {
 function optimize() {
     currentSolution = getInitialSolution();
     notifyOverlayCanvas(currentSolution);
-    //initializeChart();
     iterationCount = 0;
     interval = setInterval(anneal, 10);
 }
@@ -58,7 +60,7 @@ function anneal() {
     
     // update user interface, by no means vital to the algorithm
     notifyOverlayCanvas(currentSolution);
-    // notifyChart(currentCost, temperature)
+    notifyChart(currentCost, temperature)
 
     temperature *= relativeTemperatureRetention;
 }

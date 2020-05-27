@@ -126,10 +126,16 @@ function notifyOverlayCanvas(sol) {
 }
 
 function start() {
+    stop();
+    load_default_chart();
+    temperature = $('#temp').val();
+    relativeTemperatureRetention = $('#retention').val();
     distanceMatrix = getDistanceMatrix();
     optimize();
 }
 
 function stop() {
-    clearInterval(interval);
+    if (interval) {
+        clearInterval(interval);
+    }
 }
