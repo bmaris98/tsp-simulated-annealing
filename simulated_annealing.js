@@ -1,6 +1,3 @@
-$('#temp').val(100);
-$('#retention').val(0.9);
-
 var stop;
 var distanceMatrix;
 var currentSolution;

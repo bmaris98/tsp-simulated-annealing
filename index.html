@@ -19,6 +19,9 @@
                 Implemented by Cosmin Lucaci, Denis Eneotescu, Cristian Iacob and Bogdan Maris.
             </p>
             <p>UBB @ 2020</p>
+            <p>
+                View source code <a href="https://github.com/bmaris98/tsp-simulated-annealing" target="_blank">here</a>.
+            </p>
         </div>
       </div>
     <div class="container">
@@ -41,13 +44,18 @@
             <div class="col-12">
                 <label for="temp">Start Temperature ( val > 0 )</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" id="temp">
+                  <input type="text" value="1000" class="form-control" id="temp">
                 </div>
 
                 <label for="retention">Relative Temperature Retention ( 0 <= val < 1 )</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" id="retention">
+                  <input type="text" value="0.99" class="form-control" id="retention">
                 </div>
+                
+                <label class="box-container">Enable live charting (<strong>major performance hit</strong>)
+                    <input id="enable-charting" type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                  </label>
             </div>
         </div>
         <div class="row">

@@ -127,6 +127,7 @@ function notifyOverlayCanvas(sol) {
 
 function start() {
     stop();
+    chartingEnabled = $("#enable-charting").is(":checked");
     load_default_chart();
     temperature = $('#temp').val();
     relativeTemperatureRetention = $('#retention').val();

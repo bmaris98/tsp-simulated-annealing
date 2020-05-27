@@ -1,7 +1,14 @@
 var chartContext;
 var chart;
+var chartingEnabled = true;
 
 function load_default_chart() {
+    if (!chartingEnabled) {
+        if (chart) {
+            chart.destroy();
+        }
+        return;
+    }
     chartContext = document.getElementById('chart').getContext('2d');
 
 
@@ -37,6 +44,9 @@ function load_default_chart() {
 }
 
 function notifyChart(currentCost, temperature) {
+    if (! chartingEnabled) {
+        return;
+    }
     chart.data.labels.push(temperature);
     chart.data.datasets[0].data.push(currentCost);
     chart.update();
