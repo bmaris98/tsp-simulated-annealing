@@ -33,6 +33,7 @@ var customNode = document.createElement("custom:cc"),
 
 var slider = document.getElementById("myRange");
 slider.oninput = function() {
+    stop();
     linesContext.clearRect(0, 0, w, h);
     p.data = genCircles(slider.value);
     drawCustom();
@@ -73,28 +74,62 @@ function drawCanvas () {
     });
     ctx.stroke();
     ctx.restore();
-    //window.requestAnimationFrame(drawCanvas);
-}
-
-function drawLinesOnOverlay() {
-    linesContext.clearRect(0, 0, w, h);
-    linesContext.lineWidth = 1;
-    linesContext.strokeStyle = "#335";
-    linesContext.beginPath();
-    linesContext.moveTo(p.data[0].x, p.data[0].y);
-    p.data.forEach(element => {
-        linesContext.lineTo(element.x, element.y);
-        linesContext.moveTo(element.x, element.y);
-    });
-    linesContext.lineTo(p.data[0].x, p.data[0].y);
-    linesContext.stroke();
 }
 
 drawCustom();
-// https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
 var config = { attributes: true, childList: true, subtree: true };
 var callback = function (mutationsList, observer) {
     drawCanvas();
 };
 var observer = new MutationObserver(callback);
 observer.observe(customNode, config);
+
+function computeDistance(p1, p2) {
+    return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2))
+}
+
+function getDistanceMatrix() {
+    var data = p.data;
+    var distanceMatrix = [];
+    for (var i = 0; i < data.length; i++) {
+        var distancesForCurrent = [];
+        for(var j = 0; j < data.length; j++) {
+            distancesForCurrent.push(computeDistance(data[i], data[j]));
+        }
+        distanceMatrix.push(distancesForCurrent);
+    }
+    return distanceMatrix;
+}
+
+function initializeOverlayCanvas() {
+    linesContext.clearRect(0, 0, w, h);
+}
+
+function notifyOverlayCanvas(sol) {
+    linesContext.clearRect(0, 0, w, h);
+    linesContext.lineWidth = 1;
+    linesContext.strokeStyle = "#335";
+    linesContext.beginPath();
+    if (! p.data[sol[0]]) {
+        return;
+    }
+    linesContext.moveTo(p.data[sol[0]].x, p.data[sol[0]].y);
+    sol.forEach(element => {
+        if (! p.data[element]) {
+            return;
+        }
+        linesContext.lineTo(p.data[element].x, p.data[element].y);
+        linesContext.moveTo(p.data[element].x, p.data[element].y);
+    });
+    linesContext.lineTo(p.data[sol[0]].x, p.data[sol[0]].y);
+    linesContext.stroke();
+}
+
+function start() {
+    distanceMatrix = getDistanceMatrix();
+    optimize();
+}
+
+function stop() {
+    clearInterval(interval);
+}
