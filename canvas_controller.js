@@ -105,10 +105,13 @@ function initializeOverlayCanvas() {
     linesContext.clearRect(0, 0, w, h);
 }
 
-function notifyOverlayCanvas(sol) {
+function notifyOverlayCanvas(sol, is_better=true) {
     linesContext.clearRect(0, 0, w, h);
     linesContext.lineWidth = 1;
     linesContext.strokeStyle = "#335";
+    if (!is_better) {
+        linesContext.strokeStyle = "#b33";
+    }
     linesContext.beginPath();
     if (! p.data[sol[0]]) {
         return;

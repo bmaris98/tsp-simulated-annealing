@@ -50,13 +50,17 @@ function anneal() {
     
     let delta = candidateCost - currentCost;
     let acceptDecrease = acceptance(delta);
+    let is_better = true;
     if (delta < 0 || (acceptDecrease && delta !== 0)) {
         currentSolution = candidate;
         currentCost = candidateCost;
+        if (delta > 0) {
+            is_better = false;
+        }
     }
     
     // update user interface, by no means vital to the algorithm
-    notifyOverlayCanvas(currentSolution);
+    notifyOverlayCanvas(currentSolution, is_better);
     notifyChart(currentCost, temperature)
 
     temperature *= relativeTemperatureRetention;
